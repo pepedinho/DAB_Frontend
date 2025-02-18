@@ -1,8 +1,13 @@
 "use client"
 
 import { useState } from "react";
+import UploadForm from "./UploadForm";
 
-const UploadCard: React.FC = () => {
+interface UploadCardProps {
+    guild: string | null;
+}
+
+const UploadCard: React.FC<UploadCardProps> = ({guild}) => {
     const [file, setFile] = useState<File | null>(null); // État pour stocker le fichier sélectionné
     const [isLoading, setIsLoading] = useState<boolean>(false); // État de chargement
     const [error, setError] = useState<string | null>(null); // État pour gérer les erreurs
@@ -22,14 +27,14 @@ const UploadCard: React.FC = () => {
             return;
         }
 
-        setIsLoading(true); // Indiquer que le chargement a commencé
-        setError(null); // Réinitialiser l'erreur
+        setIsLoading(true);
+        setError(null);
 
         const formData = new FormData();
-        formData.append("file", file); // Ajouter le fichier au FormData
+        formData.append("file", file);
 
         try {
-            const response = await fetch("https://dab-pjtw.onrender.com/upload", {
+            const response = await fetch(`https://dab-pjtw.onrender.com/upload/${guild}`, {
                 method: "POST",
                 body: formData,
             });
@@ -38,23 +43,24 @@ const UploadCard: React.FC = () => {
                 throw new Error("Échec de l'envoi du fichier");
             }
 
-            // Optionnel : Traitez la réponse ici (par exemple, afficher un message de succès)
             console.log("Fichier téléchargé avec succès");
         } catch (err) {
             console.error("Erreur lors de l'envoi du fichier :", err);
             setError("Erreur lors de l'envoi du fichier.");
         } finally {
-            setIsLoading(false); // Indiquer que le chargement est terminé
+            setIsLoading(false);
+            window.location.reload()
         }
     };
 
     return (
         <div className="flex flex-col border-white rounded-lg border-2 p-4">
-            <input
+            {/* <input
                 type="file"
                 onChange={handleFileChange}
                 className="mb-2"
-            />
+            /> */}
+            <UploadForm onFileChange={handleFileChange} file={file}/>
             <button
                 type="button"
                 onClick={handleUpload}
