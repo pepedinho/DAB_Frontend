@@ -1,25 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import CubeLoader from "@/components/CubeLoader";
-import UploadCard from "@/components/UploadCard";
-import HoverInfos from "@/components/HoverInfos";
 
 export default function Home() {
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); 
-    const [loading, setLoading] = useState<boolean>(true); 
-    
     const checkLogin = async () => {
         const token = sessionStorage.getItem("Token");
         // const token = getCookie("isLoggedIn");
         if (!token) {
             window.location.href = `${process.env.NEXT_PUBLIC_AUTH_URL}`;
         } else {
-            setIsLoggedIn(true);
             router.push(`/dashboard`);
         }
-        setLoading(false);
     };
     const router = useRouter();
     // useEffect(() => {

@@ -16,7 +16,6 @@ export default function Dashboard() {
     let token = searchParams.get('token'); 
     const [guildList, setGuildList] = useState<Guild[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
     if (!token)
         token = sessionStorage.getItem("Token") || '';
 
@@ -40,7 +39,6 @@ export default function Dashboard() {
                     setGuildList(ownerGuilds);
                 } catch (error) {
                     console.error('Erreur lors de la récupération des guildes :', error);
-                    setError('Erreur lors de la récupération des guildes.');
                 } finally {
                     setLoading(false); // Fin du chargement
                 }
