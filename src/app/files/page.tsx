@@ -1,9 +1,11 @@
 "use client"
 
+export const dynamic = "force-dynamic";
+
 import CubeLoader from "@/components/CubeLoader";
 import FileCard from "@/components/FileCard";
 import UploadCard from "@/components/UploadCard";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 
 export interface FileInfos {
   channel: string;
@@ -54,7 +56,7 @@ export default function Home() {
   }, [])
 
   return (
-    <>
+      <Suspense fallback={<p>Chargement...</p>} >    
       {isLoading ? (
         <div className="flex flex-col items-center justify-center min-h-screen w-screen bg-inherit font-sans">
           <CubeLoader/>
@@ -77,6 +79,6 @@ export default function Home() {
           )}
         </div>
       )}
-    </>
+    </Suspense>
   );
 }

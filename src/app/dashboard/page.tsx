@@ -1,6 +1,8 @@
 "use client"
 
-import { useEffect, useState } from 'react';
+export const dynamic = "force-dynamic";
+
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from "next/navigation";
 import CubeLoader from '@/components/CubeLoader';
 
@@ -55,7 +57,7 @@ export default function Dashboard() {
     }
 
     return (
-        <>
+        <Suspense fallback={<p>Chargement...</p>} >
             {loading ? (
                     <div className="flex flex-col items-center justify-center min-h-screen w-screen bg-inherit font-sans">
                     <CubeLoader/>
@@ -86,6 +88,6 @@ export default function Dashboard() {
                     )}
                 </div>
             )}
-        </>
+        </Suspense>
     );
 }
