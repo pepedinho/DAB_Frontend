@@ -13,7 +13,7 @@ interface Guild {
     owner: boolean;
 }
 
-// 🔹 Déplacer le rendu du dashboard dans un composant séparé
+
 function DashboardContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
@@ -58,28 +58,30 @@ function DashboardContent() {
             <h2>Loading ...</h2>
         </div>
     ) : (
-        <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4">Dashboard des Guildes</h1>
-            {guildList.length > 0 ? (
-                <ul>
-                    {guildList.map((guild) => (
-                        <li key={guild.id} className="border p-4 mb-2 rounded-lg shadow">
-                            <div className="flex items-center cursor-pointer" onClick={() => handleClick(guild)}>
-                                {guild.icon && (
-                                    <img
-                                        src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`}
-                                        alt={guild.name}
-                                        className="h-10 w-10 rounded-full mr-2"
-                                    />
-                                )}
-                                <span className="text-lg font-semibold">{guild.name}</span>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p className="text-gray-500">Aucune guilde disponible.</p>
-            )}
+        <div className="flex flex-col items-start justify-start">
+            <div className="container justify-self-center self-center p-4 ">
+                <h1 className="text-2xl font-bold mb-4">Dashboard des Guildes</h1>
+                {guildList.length > 0 ? (
+                    <ul>
+                        {guildList.map((guild) => (
+                            <li key={guild.id} className="hover:backdrop-blur-lg hover:bg-[#5865F2]/50 transition-all  hover:border-black hover:text-white border-[1px] border-[#5865F2] p-4 mb-2 rounded-lg shadow-[#5865F2] ">
+                                <div className="flex items-center cursor-pointer" onClick={() => handleClick(guild)}>
+                                    {guild.icon && (
+                                        <img
+                                            src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`}
+                                            alt={guild.name}
+                                            className="h-10 w-10 rounded-full mr-2"
+                                            />
+                                        )}
+                                    <span className="text-lg font-semibold">{guild.name}</span>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p className="text-gray-500">Aucune guilde disponible.</p>
+                )}
+            </div>
         </div>
     );
 }
