@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -33,15 +34,15 @@ export default function Home() {
           className="text-center mb-16"
         >
           <div className="flex items-center justify-center gap-6 mb-8">
-            <motion.img
+            <motion.div
               whileHover={{ rotate: 360 }}
               transition={{ duration: 0.5 }}
               className="w-20 h-20"
-              src="https://cliply.co/wp-content/uploads/2021/08/372108630_DISCORD_LOGO_400.gif"
-              alt="Discord Logo"
-            />
+            >
+              <Image src="/squid_final.png" alt='DAB logo' width={100} height={100}/>
+            </motion.div>
             <h1 className="text-7xl font-bold text-white">
-              Bienvenue sur DAB 🎉
+              Bienvenue sur DAB
             </h1>
           </div>
           <p className="text-xl text-white/90 max-w-2xl mx-auto mb-12">

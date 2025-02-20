@@ -5,8 +5,7 @@ export const dynamic = "force-dynamic";
 import CubeLoader from "@/components/CubeLoader";
 import FileCard from "@/components/FileCard";
 import UploadCard from "@/components/UploadCard";
-import { useEffect, useState, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export interface FileInfos {
   channel: string;
@@ -18,10 +17,12 @@ export interface FileInfos {
   id: string;
 }
 
+interface FileSpaceProps {
+    guild: string;
+}
+
 // 🔹 Déplacer la logique dans un composant séparé
-function HomeContent() {
-  const searchParams = useSearchParams();
-  const guild = searchParams.get("guild");
+const FileSpace:React.FC<FileSpaceProps> = ({guild}) => {
 
   const [files, setFiles] = useState<FileInfos[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -64,7 +65,7 @@ function HomeContent() {
       <h2>Loading ...</h2>
     </div>
   ) : (
-    <div className="flex items-center justify-center flex-col bg-inherit h-full w-full font-sans">
+    <div className="flex items-center justify-center flex-col bg-inherit w-full font-sans">
       <p className="text-lg font-bold">Liste des fichiers:</p>
       <UploadCard guild={guild} />
       {files.length > 0 ? (
@@ -80,10 +81,4 @@ function HomeContent() {
   );
 }
 
-export default function Home() {
-  return (
-    <Suspense fallback={<p>Chargement...</p>}>
-      <HomeContent />
-    </Suspense>
-  );
-}
+export default FileSpace;
