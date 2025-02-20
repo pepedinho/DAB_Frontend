@@ -26,7 +26,7 @@ const UploadCard: React.FC<UploadCardProps> = ({guild}) => {
         formData.append("file", selectedFile);
 
         try {
-            const response = await fetch(`https://dab-production.up.railway.app/upload/${guild}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upload/${guild}`, {
                 method: "POST",
                 body: formData,
             });

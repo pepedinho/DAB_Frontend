@@ -5,9 +5,10 @@ import DownloadButton from "./DownloadButton";
 interface FileCardProps {
     file: FileInfos;
     guild: string | null;
+    refresh: () => void;
 }
 
-const FileCard: React.FC<FileCardProps> = ({ file, guild }) => {
+const FileCard: React.FC<FileCardProps> = ({ file, guild, refresh }) => {
 
     const formatDate = (dateString: string) => {
         if (!dateString) return "Date inconnue";
@@ -23,6 +24,19 @@ const FileCard: React.FC<FileCardProps> = ({ file, guild }) => {
         return `${day}/${month}/${year} ${hour}:${minute}`;
     };
 
+    const deleteFile = async () => {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/delete/${file.id}`, {
+            method: "DELETE",
+            credentials: "include",
+        });
+
+        if (!response.ok) {
+            console.log("failed to delete file");
+        }
+
+        refresh();
+    } 
+
     return(
         <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
             <a href="#">
@@ -33,9 +47,9 @@ const FileCard: React.FC<FileCardProps> = ({ file, guild }) => {
             <div className="flex items-center justify-between">
                 <DownloadButton file={file} guild={guild}/>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{file.mb_size + "Mb"}</p>
+                <button type="button" onClick={deleteFile} className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-red-800">Delete</button>                      
             </div>
         </div>
-
 
         // <div>
 

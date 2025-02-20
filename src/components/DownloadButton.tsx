@@ -17,7 +17,7 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({file, guild}) => {
         setIsLoading(true);
         console.log("Start download !")
         try {
-          const response = await fetch(`https://dab-production.up.railway.app/get/${guild}?filename=${file.file_name}`, {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/get/${guild}?filename=${file.file_name}`, {
             method: "GET",
             credentials: "include",
           });

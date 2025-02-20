@@ -31,7 +31,8 @@ function HomeContent() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`https://dab-production.up.railway.app/list/${guild}`, {
+      console.log("API URL => ", process.env.NEXT_PUBLIC_API_URL)
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/list/${guild}`, {
         method: "GET",
         credentials: "include",
       });
@@ -69,7 +70,7 @@ function HomeContent() {
       {files.length > 0 ? (
         <div className="flex m-20 flex-wrap gap-4">
           {files.map((file) => (
-            <FileCard key={file.id} file={file} guild={guild} />
+            <FileCard key={file.id} file={file} guild={guild} refresh={fetchFile} />
           ))}
         </div>
       ) : (
