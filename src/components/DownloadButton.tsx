@@ -1,6 +1,6 @@
 "use client"
 
-import { FileInfos } from "@/app/files/page";
+import { FileInfos } from "./FileSpace";
 import { useState } from "react";
 import DownloadLoader from "./DownloadLoader";
 

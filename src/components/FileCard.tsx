@@ -1,5 +1,5 @@
 "use client"
-import { FileInfos } from "@/app/files/page";
+import { FileInfos } from "./FileSpace";
 import DownloadButton from "./DownloadButton";
 
 interface FileCardProps {
