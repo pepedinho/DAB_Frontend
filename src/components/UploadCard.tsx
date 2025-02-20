@@ -34,7 +34,7 @@ const UploadCard: React.FC<UploadCardProps> = ({guild}) => {
         formData.append("file", file);
 
         try {
-            const response = await fetch(`https://dab-pjtw.onrender.com/upload/${guild}`, {
+            const response = await fetch(`https://dab-production.up.railway.app/upload/${guild}`, {
                 method: "POST",
                 body: formData,
             });

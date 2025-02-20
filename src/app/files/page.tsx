@@ -31,7 +31,7 @@ function HomeContent() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`https://dab-pjtw.onrender.com/list/${guild}`, {
+      const response = await fetch(`https://dab-production.up.railway.app/list/${guild}`, {
         method: "GET",
         credentials: "include",
       });
