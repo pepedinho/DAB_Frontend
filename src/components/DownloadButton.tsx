@@ -33,7 +33,7 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({file, guild}) => {
           // Créer un lien temporaire pour télécharger le fichier
           const a = document.createElement('a');
           a.href = url;
-          a.download = file.file_name; 
+          a.download = file.file_name + (file.extension ? ("." + file.extension) : ""); 
           document.body.appendChild(a); 
           a.click(); // Simuler un clic sur le lien
           a.remove();
