@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useState, useCallback } from "react"
 import { Guild } from "@/app/dashboard/page"
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons"
+import SearchBar from "./SearchBar"
 
 export interface FileInfos {
   channel: string
@@ -27,8 +28,24 @@ interface FileSpaceProps {
 }
 
 const FileSpace: React.FC<FileSpaceProps> = ({ guild }) => {
-  const [files, setFiles] = useState<FileInfos[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [files, setFiles] = useState<FileInfos[]>([]);
+  const [filtredFiles, setFiltredFiles] = useState<FileInfos[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  
+
+  const searchFile = (s: string) => {
+    if (!s.trim) {
+      setFiltredFiles(files);
+      return;
+    }
+
+    const filtered = files.filter(file => 
+      file.file_name.toLowerCase().includes(s.toLowerCase())
+    );
+
+    console.log("[filter] => ", filtered);
+    setFiltredFiles(filtered);
+  }
 
   const fetchFile = useCallback(async () => {
     console.log("📌 Attempting to fetch from backend...")
@@ -42,6 +59,8 @@ const FileSpace: React.FC<FileSpaceProps> = ({ guild }) => {
       })
       console.log("📌 Response received:", response)
       if (!response.ok) {
+        const url = "https://discord.com/oauth2/authorize?client_id=1340725673056010291";
+        window.open(url, "popupWindow", "width=600,height=800,scrollbars=yes,resizable=yes");
         throw new Error("Unable to fetch file list")
       }
 
@@ -57,20 +76,18 @@ const FileSpace: React.FC<FileSpaceProps> = ({ guild }) => {
       setIsLoading(false)
     }
   }, [guild, files])
-
+  
   useEffect(() => {
-    fetchFile()
+    fetchFile();
   }, [])
+  
+  useEffect(() => {
+    console.log("[files] => ", files.length);
+    setFiltredFiles(files);
+  }, [isLoading]);
 
   return (
-    <div className="min-h-screen w-full bg-[#313338] font-sans">
-      {isLoading ? (
-        <div className="flex flex-col items-center justify-center min-h-screen">
-          <CubeLoader />
-          <h2 className="mt-4 text-xl font-semibold text-gray-700 dark:text-gray-300">Loading ...</h2>
-        </div>
-      ) : (
-        <div className="container mx-auto px-4 py-8 items-start">
+        <div className="container mx-2 px-4 py-8 items-start">
           <div className="flex justify-between">
             <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-8 ">{guild.name}</h1>
             <div 
@@ -80,21 +97,29 @@ const FileSpace: React.FC<FileSpaceProps> = ({ guild }) => {
               <FontAwesomeIcon icon={faArrowRotateRight}/>
             </div>
           </div>
-          <div className="mb-8">
+          <div className="flex flex-col">
             <UploadCard guild={guild.id} refresh={fetchFile} />
+            <SearchBar onChange={searchFile}/>
           </div>
-          {files.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {files.map((file) => (
-                <FileCard key={file.id} file={file} guild={guild.id} refresh={fetchFile} />
-              ))}
+          {isLoading ? (
+            <div className="flex flex-col items-center justify-center w-full h-[92vh]">
+              <CubeLoader />
+              <h2 className="mt-4 text-xl font-semibold text-gray-700 dark:text-gray-300">Loading ...</h2>
             </div>
           ) : (
-            <p className="text-gray-500 dark:text-gray-400 text-center text-lg">No files available</p>
+            <>
+              {filtredFiles.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filtredFiles.map((file) => (
+                    <FileCard key={file.id} file={file} guild={guild.id} refresh={fetchFile} />
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-500 dark:text-gray-400 text-center text-lg">No files available</p>
+              )}
+            </>
           )}
         </div>
-      )}
-    </div>
   )
 }
 

@@ -51,24 +51,24 @@ function DashboardContent() {
             if (token) {
                 sessionStorage.setItem("Token", token);
                 try {
-                    let response = await fetch("https://discord.com/api/v10/users/@me/guilds", {
+                    const responseA = await fetch("https://discord.com/api/v10/users/@me/guilds", {
                         headers: { Authorization: `Bearer ${token}` },
                     });
 
-                    if (!response.ok) throw new Error("Failed to fetch guilds");
+                    if (responseA.ok) {
+                        const guilds: Guild[] = await responseA.json();
+                        const ownerGuilds = guilds.filter((guild) => guild.owner);
+                        setGuildList(ownerGuilds);
+                    }
 
-                    const guilds: Guild[] = await response.json();
-                    const ownerGuilds = guilds.filter((guild) => guild.owner);
-                    setGuildList(ownerGuilds);
-
-                    response = await fetch("https://discord.com/api/v10/users/@me", {
+                    const responseB = await fetch("https://discord.com/api/v10/users/@me", {
                         headers: { Authorization: `Bearer ${token}` },
                     });
 
-                    const user = await response.json();
-                    setDsUser(user)
-                    if (!response.ok) 
+                    if (!responseB.ok || !responseB.ok) 
                         throw new Error("Failed to fetch user infos");
+                    const user = await responseB.json();
+                    setDsUser(user)
                 } catch (error) {
                     console.error("Erreur lors de la récupération des guildes :", error);
                 } finally {
@@ -132,7 +132,7 @@ function DashboardContent() {
                         )}
                     </div>
                 </div>
-                <div className="flex-1 w-full h-[92vh] overflow-y-auto overflow-x-hidden">
+                <div className="flex w-full h-[92vh] justify-center overflow-y-auto overflow-x-hidden">
                     {selectedGuild ? (
                         <>
                             <FileSpace guild={selectedGuild} />
