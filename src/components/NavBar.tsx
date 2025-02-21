@@ -26,7 +26,7 @@ const NavBar: React.FC<NavBarProps> = (user) => {
     const router = useRouter();
 
     return (
-        <div className="bg-[#5865F2] flex h-[100px] items-center justify-between">
+        <div className="bg-[#5865F2] flex h-[75px] items-center justify-between">
             <div className='relative flex items-center group cursor-pointer'>
                 <Image 
                         src="/squid_final.png" 
@@ -42,9 +42,9 @@ const NavBar: React.FC<NavBarProps> = (user) => {
                 </h2> */}
             </div>
             {dsUserImg && (
-                <div className='flex h-[100%] flex-col items-center'>
+                <div className='flex h-[100%] items-center'>
+                    <h2 className='text-lg font-semibold'>{user.user?.global_name}</h2>
                     <img src={dsUserImg} className='rounded-full h-[70%] mr-6 shadow-black shadow-sm' alt='DAB' onClick={() => {router.push("/")}}/>
-                    <h2 className='text-lg font-semibold self-end mb-3'>{user.user?.global_name}</h2>
                 </div>
             )}
         </div>

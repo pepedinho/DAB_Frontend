@@ -95,12 +95,14 @@ function DashboardContent() {
             <NavBar user={dsUser}/>
             <div className="flex">
                 <div className="flex flex-col items-start justify-start">
-                    <div className=" w-[70px] h-screen bg-[#252529]">
+                    <div className=" w-[73px] h-screen bg-[#252529]">
                         {/* <h1 className="text-2xl font-bold mb-4">Dashboard des Guildes</h1> */}
                         {guildList.length > 0 ? (
-                            <ul className="flex flex-col items-center gap-4">
+                            <ul className="flex flex-col items-start gap-4 mt-4">
                                 {guildList.map((guild) => (
-                                    <li key={guild.id} className="w-14 h-14">
+                                    <li key={guild.id} className="flex items-center group">
+                                            <div className="w-1 h-1 mr-[4px] bg-white opacity-0 scale-y-0 transition-all rounded-tl-[0px] rounded-tr-[4px] rounded-br-[4px] rounded-bl-[0px] duration-300 group-hover:opacity-100 group-hover:scale-y-[500%]">
+                                            </div>
                                             {guild.icon ? (
                                                 <img
                                                     src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`}
@@ -127,7 +129,7 @@ function DashboardContent() {
                         )}
                     </div>
                 </div>
-                <div className="flex-1 w-full h-[90vh] p-4 overflow-auto">
+                <div className="flex-1 w-full h-[92vh] p-4 overflow-y-auto overflow-x-hidden">
                     {selectedGuild ? (
                         <>
                             {/* 🔹 Bouton Retour */}
