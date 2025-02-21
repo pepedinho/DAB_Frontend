@@ -12,8 +12,10 @@ export default function Home() {
   const checkLogin = async () => {
     const token = sessionStorage.getItem("Token");
     if (!token) {
+      console.log("[home] - Token not found");
       window.location.href = `${process.env.NEXT_PUBLIC_AUTH_URL}`;
     } else {
+      console.log("[home] - Token found");
       router.push(`/dashboard`);
     }
   };

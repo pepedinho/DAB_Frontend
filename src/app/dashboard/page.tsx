@@ -121,6 +121,9 @@ function DashboardContent() {
                                                     />
                                                 )}
                                             {/* <span className="text-lg font-semibold">{guild.name}</span> */}
+                                            <span className="absolute left-20 px-3 py-1 bg-[#252529] text-white  text-sm rounded-lg opacity-0 invisible scale-95 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 group-hover:visible">
+                                                {guild.name}
+                                            </span>
                                     </li>
                                 ))}
                             </ul>
@@ -142,7 +145,7 @@ function DashboardContent() {
                             <FileSpace guild={selectedGuild.id} />
                         </>
                     ) : (
-                        <p className="text-gray-400">Sélectionnez une guilde pour voir les fichiers.</p>
+                        <p className="text-gray-400 justify-self-center mt-[46vh]">Sélectionnez une guilde pour voir les fichiers.</p>
                     )}
                 </div>
             </div>
