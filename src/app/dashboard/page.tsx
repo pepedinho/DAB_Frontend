@@ -132,7 +132,7 @@ function DashboardContent() {
                         )}
                     </div>
                 </div>
-                <div className="flex-1 w-full h-[92vh] p-4 overflow-y-auto overflow-x-hidden">
+                <div className="flex-1 w-full h-[92vh] overflow-y-auto overflow-x-hidden">
                     {selectedGuild ? (
                         <>
                             {/* 🔹 Bouton Retour */}

@@ -1,84 +1,91 @@
-"use client";
+"use client"
 
-export const dynamic = "force-dynamic";
+import type React from "react"
 
-import CubeLoader from "@/components/CubeLoader";
-import FileCard from "@/components/FileCard";
-import UploadCard from "@/components/UploadCard";
-import { useEffect, useState } from "react";
+export const dynamic = "force-dynamic"
+
+import CubeLoader from "@/components/CubeLoader"
+import FileCard from "@/components/FileCard"
+import UploadCard from "@/components/UploadCard"
+import { useEffect, useState, useCallback } from "react"
 
 export interface FileInfos {
-  channel: string;
-  file_name: string;
-  size: string;
-  mb_size: string;
-  date: string;
-  extension: string;
-  id: string;
+  channel: string
+  file_name: string
+  size: string
+  mb_size: string
+  date: string
+  extension: string
+  id: string
 }
 
 interface FileSpaceProps {
-    guild: string;
+  guild: string
 }
 
-// 🔹 Déplacer la logique dans un composant séparé
-const FileSpace:React.FC<FileSpaceProps> = ({guild}) => {
+const FileSpace: React.FC<FileSpaceProps> = ({ guild }) => {
+  const [files, setFiles] = useState<FileInfos[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const [files, setFiles] = useState<FileInfos[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const fetchFile = async () => {
-    console.log("📌 Tentative de requête vers le backend...");
-    setIsLoading(true);
+  const fetchFile = useCallback(async () => {
+    console.log("📌 Attempting to fetch from backend...")
+    setIsLoading(true)
 
     try {
       console.log("API URL => ", process.env.NEXT_PUBLIC_API_URL)
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/list/${guild}`, {
         method: "GET",
         credentials: "include",
-      });
-      console.log("📌 Réponse reçue :", response);
+      })
+      console.log("📌 Response received:", response)
       if (!response.ok) {
-        throw new Error("Impossible de récupérer la liste des fichiers");
+        throw new Error("Unable to fetch file list")
       }
 
-      const data = await response.json();
+      const data = await response.json()
       if (data.files && Array.isArray(data.files)) {
-        console.log("📌 Enregistrement de la data : ", data.files);
-        setFiles(data.files);
-        console.log("📌 Après enregistrement de la data : ", files);
+        console.log("📌 Saving data: ", data.files)
+        setFiles(data.files)
+        console.log("📌 After saving data: ", files)
       }
     } catch (err) {
-      console.error("Erreur lors de la récupération des données :", err);
+      console.error("Error fetching data:", err)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }, [guild, files])
 
   useEffect(() => {
-    fetchFile();
-  }, []);
+    fetchFile()
+  }, [])
 
-  return isLoading ? (
-    <div className="flex flex-col items-center justify-center min-h-screen w-screen bg-inherit font-sans">
-      <CubeLoader />
-      <h2>Loading ...</h2>
-    </div>
-  ) : (
-    <div className="flex items-center justify-center flex-col bg-inherit w-full font-sans">
-      <p className="text-lg font-bold">Liste des fichiers:</p>
-      <UploadCard guild={guild} />
-      {files.length > 0 ? (
-        <div className="flex m-20 flex-wrap gap-4">
-          {files.map((file) => (
-            <FileCard key={file.id} file={file} guild={guild} refresh={fetchFile} />
-          ))}
+  return (
+    <div className="min-h-screen w-full bg-[#313338] font-sans">
+      {isLoading ? (
+        <div className="flex flex-col items-center justify-center min-h-screen">
+          <CubeLoader />
+          <h2 className="mt-4 text-xl font-semibold text-gray-700 dark:text-gray-300">Loading ...</h2>
         </div>
       ) : (
-        <p className="text-gray-500 mt-2">Aucun fichier disponible : {files.length}</p>
+        <div className="container mx-auto px-4 py-8">
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-8">File Management</h1>
+          <div className="mb-8">
+            <UploadCard guild={guild} refresh={fetchFile} />
+          </div>
+          {files.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {files.map((file) => (
+                <FileCard key={file.id} file={file} guild={guild} refresh={fetchFile} />
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-500 dark:text-gray-400 text-center text-lg">No files available</p>
+          )}
+        </div>
       )}
     </div>
-  );
+  )
 }
 
-export default FileSpace;
+export default FileSpace
+
