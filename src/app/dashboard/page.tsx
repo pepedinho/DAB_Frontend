@@ -9,7 +9,7 @@ import NavBar from "@/components/NavBar";
 import FileSpace from "@/components/FileSpace";
 import Image from "next/image";
 
-interface Guild {
+export interface Guild {
     id: string;
     name: string;
     icon: string | null;
@@ -135,14 +135,7 @@ function DashboardContent() {
                 <div className="flex-1 w-full h-[92vh] overflow-y-auto overflow-x-hidden">
                     {selectedGuild ? (
                         <>
-                            {/* 🔹 Bouton Retour */}
-                            <button
-                                className="mb-4 px-4 py-2 bg-gray-700 text-white rounded-md fixed"
-                                onClick={() => setSelectedGuild(null)}
-                            >
-                                ⬅ Retour
-                            </button>
-                            <FileSpace guild={selectedGuild.id} />
+                            <FileSpace guild={selectedGuild} />
                         </>
                     ) : (
                         <p className="text-gray-400 justify-self-center mt-[46vh]">Sélectionnez une guilde pour voir les fichiers.</p>

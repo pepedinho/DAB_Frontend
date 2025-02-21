@@ -38,7 +38,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, guild, refresh }) => {
   }
 
   return (
-    <div className="max-w-sm p-6 bg-[#252529] rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
+    <div className="flex flex-col justify-around max-w-sm p-6 bg-[#252529] rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
       <div className="flex items-center mb-4">
         <DocumentIcon className="w-8 h-8 text-[#5865F2] mr-3" />
         <div>

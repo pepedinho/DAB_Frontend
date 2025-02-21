@@ -1,6 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import '../../public/font/style.css';
+
 
 :root {
   --background: #ffffff;
@@ -14,7 +16,7 @@
     /* --background: #0a0a0a; */
     --background: #313338;
     --foreground: #ededed;
-
+    
   }
 }
 
@@ -23,5 +25,5 @@ body {
   background: var(--background);
   min-height: 100vh;
   overflow: hidden;
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: 'gg sans Normal Regular'; */
 }
