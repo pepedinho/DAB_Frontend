@@ -69,7 +69,7 @@ const UploadCard: React.FC<UploadCardProps> = ({ guild, refresh }) => {
       className={`flex flex-col items-center justify-center p-6 border-2 border-dashed rounded-lg transition-all duration-300 ease-in-out
                 ${
                   isDragOver
-                    ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                    ? "border-[#5865F2] bg-blue-50 dark:bg-blue-900/20"
                     : "border-gray-300 dark:border-gray-600 bg-[#252529]"
                 }`}
       onDragOver={(e) => {
@@ -79,7 +79,7 @@ const UploadCard: React.FC<UploadCardProps> = ({ guild, refresh }) => {
       onDragLeave={() => setIsDragOver(false)}
       onDrop={handleDrop}
     >
-      <ArrowUpTrayIcon className="w-12 h-12 text-blue-500 mb-4" />
+      <ArrowUpTrayIcon className="w-12 h-12 text-[#5865F2] mb-4" />
       <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">Upload a file</h3>
       <input
         type="file"

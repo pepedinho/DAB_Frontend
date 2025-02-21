@@ -40,7 +40,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, guild, refresh }) => {
   return (
     <div className="max-w-sm p-6 bg-[#252529] rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
       <div className="flex items-center mb-4">
-        <DocumentIcon className="w-8 h-8 text-blue-500 mr-3" />
+        <DocumentIcon className="w-8 h-8 text-[#5865F2] mr-3" />
         <div>
           <h5 className="text-xl font-bold text-gray-900 dark:text-white">{file.file_name + "." + file.extension}</h5>
           <p className="text-sm text-gray-500 dark:text-gray-400">{formatDate(file.date)}</p>
